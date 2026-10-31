@@ -282,6 +282,104 @@ footer{background:#271923;color:#f8edf1;border:0}footer .logo{color:#fff}footer 
 
  .reviews-content{max-width:1050px}.reviews-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;padding:24px}.reviews-summary>div{display:grid;gap:4px;text-align:center;min-width:130px}.reviews-summary strong{font:48px Georgia,serif;color:var(--dark)}.review-stars{color:#c58a48;letter-spacing:4px;font-size:20px}.reviews-summary small{color:var(--muted)}.reviews-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:30px}.review-card{background:white;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 24px #593c3210}.review-card .review-stars{font-size:17px}.review-card p{line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere}.review-card strong{color:var(--dark)}.review-date{font-size:12px;color:var(--muted)}.review-form{max-width:720px;margin:30px auto;padding:clamp(20px,4vw,36px)}.review-form h2{margin:8px 0}.rating-picker{display:flex;gap:8px;direction:rtl}.rating-picker input{position:absolute;opacity:0;pointer-events:none}.rating-picker label{cursor:pointer;color:#d8c7c0;font-size:32px;line-height:1}.rating-picker label:has(input:checked),.rating-picker label:has(input:checked)~label{color:#c58a48}.review-admin-divider{border:0;border-top:1px solid var(--line);margin:30px 0}.admin-review-card{border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}.admin-review-card p{white-space:pre-wrap}.admin-review-card button{margin:6px 6px 0 0}.review-status{font-size:12px;color:var(--muted);margin-inline-start:8px}@media(max-width:650px){.reviews-grid{grid-template-columns:1fr}.reviews-summary{align-items:flex-start;flex-direction:column}.rating-picker label{font-size:29px}}
 .customer-booking-lookup{text-align:right}.customer-booking-lookup h2{margin-top:0}.customer-lookup-form{display:grid;gap:12px;margin:22px 0}.customer-lookup-form .field{margin:0}.customer-lookup-form input{width:100%;min-height:48px}.lookup-hint{font-size:13px;color:var(--muted);line-height:1.7}.customer-booking-results{display:grid;gap:12px;margin:18px 0}.customer-booking-result{padding:16px;border:1px solid var(--line);border-radius:14px;background:#fffaf6}.customer-booking-result h3{margin:0 0 8px}.customer-booking-result p{margin:6px 0}.booking-state{display:inline-block;padding:5px 10px;border-radius:20px;background:var(--blush);color:var(--dark);font-weight:700;font-size:13px}.customer-booking-error{color:#a33;font-weight:600;margin:12px 0}
+
+/* FULL-WIDTH RESPONSIVE REDESIGN — Nails by Masha / Atelier Edition */
+:root{
+ --rose:#bd7890;--dark:#392331;--blush:#f2e5e9;--cream:#fbf8f4;--ink:#282329;
+ --muted:#817780;--line:#e9dfe3;--gold:#bd9a69;--surface:#fffefd;
+ --shadow:0 24px 70px rgba(45,28,39,.09);--shadow-soft:0 10px 34px rgba(45,28,39,.06)
+}
+html,body{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;overflow-x:hidden!important}
+body{font-family:"Trebuchet MS",Arial,sans-serif!important;background:var(--cream)!important;color:var(--ink)!important;line-height:1.75}
+*,*:before,*:after{box-sizing:border-box}
+img,video,iframe{max-width:100%}
+main{display:block!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+.view,.view.active{width:100%!important;max-width:none!important;margin:0!important;min-width:0!important}
+.view.active{display:block}
+header{width:100%!important;max-width:none!important;min-width:0!important;min-height:88px;display:flex!important;flex-direction:row;align-items:center;justify-content:space-between;gap:28px;padding:16px clamp(18px,5vw,84px)!important;background:rgba(255,254,253,.97)!important;border:0!important;border-bottom:1px solid var(--line)!important;box-shadow:0 8px 35px rgba(50,30,42,.055)!important;backdrop-filter:blur(18px)}
+.logo{font:clamp(23px,2.1vw,31px) Georgia,serif!important;letter-spacing:.3px!important;color:var(--dark)!important;white-space:nowrap}
+.logo small{font:9px Arial,sans-serif!important;letter-spacing:5px!important;color:var(--muted)!important;margin-top:2px}
+nav{display:flex!important;flex:1 1 auto;justify-content:flex-end!important;align-items:center;flex-wrap:wrap!important;gap:5px clamp(9px,1.7vw,25px)!important;width:auto!important;max-width:100%!important;min-width:0;overflow:visible!important;white-space:normal!important}
+nav button{font-size:13px!important;font-weight:700!important;color:#65545e!important;padding:9px 2px!important;border:0!important;background:transparent!important;white-space:nowrap}
+nav button.active,nav button:hover{color:#a34d70!important;text-decoration:none!important}
+nav button.active:after{content:"";display:block;height:2px;background:var(--rose);border-radius:10px;margin-top:5px}
+.btn{background:var(--dark)!important;color:#fff!important;border:1px solid var(--dark)!important;border-radius:999px!important;padding:14px 25px!important;box-shadow:0 8px 22px rgba(57,35,49,.15)!important;transition:transform .2s,background .2s!important}
+.btn:hover{background:#75445e!important;border-color:#75445e!important;transform:translateY(-2px)}
+.hero{width:100%!important;max-width:none!important;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)!important;min-height:min(720px,70vw)!important;background:linear-gradient(125deg,#34212e,#684054 70%,#a87583)!important}
+.hero-copy{width:100%;max-width:780px;padding:clamp(34px,7vw,112px)!important}
+.hero h1{font-size:clamp(54px,7.2vw,106px)!important;line-height:.98!important;letter-spacing:-2px!important}
+.hero p{font-size:clamp(16px,1.5vw,20px)!important;line-height:2!important}
+.hero-image{width:100%!important;min-width:0;min-height:clamp(350px,52vw,650px)!important;background-position:center!important;background-size:cover!important}
+.features{width:100%!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;padding:26px clamp(18px,6vw,100px)!important;background:#f1e7e9!important}
+.feature{min-width:0;padding:12px clamp(8px,2vw,25px)!important;border-inline-start:1px solid #e1d1d7!important}
+.feature strong{color:var(--dark)!important}.feature small{color:var(--muted)!important}
+.page-head,.booking-head{width:100%!important;max-width:none!important;margin:0!important;padding:clamp(46px,7vw,94px) 20px clamp(40px,5vw,65px)!important;background:linear-gradient(125deg,#392331,#694256)!important;color:#fff!important;text-align:center!important}
+.page-head h1,.booking-head h1{font-size:clamp(36px,5vw,64px)!important;color:#fff!important;line-height:1.1!important}
+.page-head p,.booking-head p{color:#f0e2e8!important}
+.content{width:100%!important;max-width:1440px!important;margin:0 auto!important;padding:clamp(34px,5vw,76px) clamp(18px,5vw,76px)!important}
+.panel,.contact-card,.service,.review-card,.customer-booking-result{border-radius:18px!important;background:var(--surface)!important;border:1px solid var(--line)!important;box-shadow:var(--shadow-soft)!important}
+.panel{padding:clamp(20px,3vw,36px)!important}
+.reviews-content{max-width:1200px!important}
+.reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.reviews-summary{border-radius:18px!important}
+.booking-content{max-width:1200px!important}
+.booking-shell{max-width:1100px!important}
+.booking-wizard{border-radius:20px!important}
+.calendar-panel{border-radius:16px!important}
+.gallery-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:22px!important}
+.gallery-grid figure{border-radius:16px!important}
+.contact-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.service{border-radius:16px!important}
+.final-booking-cta{margin:0 clamp(16px,5vw,76px) clamp(36px,5vw,70px)!important;padding:clamp(30px,5vw,64px)!important;border-radius:22px!important}
+footer{width:100%!important;padding:36px clamp(18px,5vw,84px)!important;background:#2b2029!important}
+.customer-booking-lookup{max-width:760px!important}
+@media(max-width:900px){
+ header{flex-direction:column!important;gap:9px!important;padding:14px 18px!important}
+ nav{width:100%!important;justify-content:center!important;gap:5px 17px!important}
+ .hero{min-height:0!important}
+ .hero-copy{padding:clamp(28px,6vw,60px)!important}
+ .hero-image{min-height:420px!important}
+ .features{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .contact-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+ html,body{width:100%!important;min-width:0!important;overflow-x:hidden!important}
+ header{width:100%!important;display:flex!important;align-items:center!important;flex-direction:column!important;padding:12px 12px 8px!important;gap:8px!important}
+ .logo{font-size:25px!important;text-align:center!important}
+ nav{width:100%!important;display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:3px 13px!important;overflow:visible!important;padding:4px 0!important}
+ nav button{font-size:12px!important;padding:6px 1px!important}
+ .hero{width:100%!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+ .hero-image{order:0!important;width:100%!important;height:clamp(230px,67vw,390px)!important;min-height:0!important}
+ .hero-copy{width:100%!important;padding:30px 23px 38px!important;text-align:center}
+ .hero h1{text-align:center!important;font-size:clamp(48px,13vw,70px)!important}
+ .hero p{margin-inline:auto!important;font-size:16px!important}
+ .features{width:100%!important;padding:14px 12px!important;gap:6px!important}
+ .feature{padding:10px 6px!important;gap:8px!important}
+ .feature strong{font-size:12px!important}.feature small{font-size:11px!important}
+ .page-head,.booking-head{width:100%!important;padding:40px 17px 34px!important}
+ .page-head h1,.booking-head h1{font-size:clamp(34px,9vw,46px)!important}
+ .content{width:100%!important;max-width:100%!important;padding:30px 14px!important;margin:0!important}
+ .panel{padding:19px!important}
+ .reviews-grid{grid-template-columns:1fr!important}
+ .reviews-summary{padding:18px!important}
+ .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .gallery-grid figcaption{font-size:12px!important}
+ .contact-cards{grid-template-columns:1fr!important}
+ .booking-progress{max-width:100%!important;gap:4px!important}
+ .booking-step small{font-size:9px!important}
+ .booking-step span{width:30px!important;height:30px!important}
+ .booking-date-layout{grid-template-columns:minmax(0,1fr)!important}
+ .booking-wizard{padding:16px!important}
+ .booking-service-option{grid-template-columns:20px minmax(0,1fr) auto!important}
+ .final-booking-cta{margin:0 14px 30px!important;padding:28px 18px!important}
+ footer{padding:28px 18px!important}
+}
+@media(max-width:360px){
+ nav{gap:2px 9px!important}nav button{font-size:11px!important}
+ .hero-image{height:230px!important}
+ .gallery-grid{gap:8px!important}
+}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
 <div id="brandSplash" aria-label="Nails by Masha" role="status">
   <div class="splash-shimmer"></div>
