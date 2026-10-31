@@ -59,6 +59,29 @@ footer{background:linear-gradient(110deg,#4c173a,#92235f 65%,#bd397d);color:#fff
 @media(max-width:800px){header{gap:10px}nav{justify-content:flex-start;padding:4px 0 8px}.hero{min-height:0}.hero-copy{padding:36px 28px}.features{padding:18px}.content{padding-top:34px;padding-bottom:34px}}
 @media(max-width:600px){header{padding:12px 10px}.logo{font-size:24px}nav{gap:5px}nav button{font-size:12px;padding:9px 10px}.hero{grid-template-columns:1fr}.hero-image{grid-row:1;min-height:290px}.hero-copy{padding:34px 23px 40px}h1{font-size:58px}.hero p{font-size:16px}.features{gap:9px}.feature{padding:13px 10px;border-radius:15px}.feature strong{font-size:13px}.feature small{font-size:11px}.gallery-grid{gap:10px}.gallery-grid figure{border-radius:17px}.service{padding:18px}.panel{border-radius:19px}}
 
+
+/* Pink Glam gallery polish */
+.gallery-intro{max-width:720px;margin:0 auto 28px;text-align:center}
+.gallery-intro p{color:var(--muted);line-height:1.8}
+.gallery-filters{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:22px auto 30px}
+.gallery-filter{border:1px solid #f0b9d5;background:#fff;color:#92245f;border-radius:999px;padding:10px 19px;font-weight:800;transition:.2s}
+.gallery-filter:hover,.gallery-filter.active{background:linear-gradient(120deg,#f04a9d,#bd2678);color:#fff;border-color:transparent;box-shadow:0 7px 18px #e83e9130}
+.gallery-grid figure{cursor:zoom-in;transition:transform .25s,box-shadow .25s}
+.gallery-grid figure:hover{transform:translateY(-5px);box-shadow:0 18px 38px #8426532a}
+.gallery-grid figure[hidden]{display:none}
+.gallery-grid figcaption{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.gallery-grid figcaption:after{content:"↗";font-size:18px;opacity:.85}
+.gallery-lightbox{position:fixed;inset:0;z-index:1000;background:#210b1deF;display:none;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(9px)}
+.gallery-lightbox.open{display:flex}
+.gallery-lightbox figure{margin:0;max-width:min(92vw,760px);max-height:90vh;position:relative;text-align:center}
+.gallery-lightbox img{display:block;max-width:100%;max-height:78vh;object-fit:contain;border-radius:18px;box-shadow:0 20px 70px #0008}
+.gallery-lightbox figcaption{color:#fff;margin-top:14px;font-weight:800}
+.gallery-lightbox button{position:absolute;border:1px solid #ffffff65;background:#ffffff20;color:#fff;border-radius:50%;width:42px;height:42px;font-size:24px;cursor:pointer}
+.gallery-lightbox .close-lightbox{top:-14px;right:-14px}
+.gallery-lightbox .prev-lightbox{left:-54px;top:48%}
+.gallery-lightbox .next-lightbox{right:-54px;top:48%}
+@media(max-width:600px){.gallery-lightbox{padding:14px}.gallery-lightbox .prev-lightbox{left:5px;top:auto;bottom:12px}.gallery-lightbox .next-lightbox{right:5px;top:auto;bottom:12px}.gallery-lightbox .close-lightbox{top:5px;right:5px}.gallery-filters{gap:7px}.gallery-filter{padding:9px 14px;font-size:13px}}
+
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head><body>
 <header><a class="logo" href="#" onclick="showPage('home');return false">Nails by Masha<span>♡</span><small>BEAUTY STUDIO</small></a>
 <nav><button data-page="home" class="active" onclick="showPage('home')">דף הבית</button><button data-page="booking" onclick="showPage('booking')">קביעת תור</button><button data-page="myBookings" onclick="showPage('myBookings')">התורים שלי</button><button data-page="gallery" onclick="showPage('gallery')">גלריה</button><button data-page="services" onclick="showPage('services')">מחירון</button><button data-page="contact" onclick="showPage('contact')">יצירת קשר</button><button data-page="admin" onclick="showPage('admin')">ניהול</button></nav></header>
@@ -84,4 +107,32 @@ document.getElementById('bookingForm').addEventListener('submit',async e=>{e.pre
 document.getElementById('lookupBookingForm').addEventListener('submit',async e=>{e.preventDefault();const out=document.getElementById('customerBookings');out.textContent='מחפשת את התורים שלך...';const {data,error}=await supabaseClient.rpc('lookup_customer_bookings',{p_customer_phone:document.getElementById('lookupPhone').value,p_access_token:document.getElementById('lookupCode').value.trim().toLowerCase()});out.innerHTML='';if(error){out.textContent='לא ניתן לטעון את התורים כרגע. נסי שוב מאוחר יותר.';return}if(!data||!data.length){out.textContent='לא נמצאו תורים עם מספר הטלפון והקוד שהוזנו.';return}data.forEach(b=>{const card=document.createElement('div');card.className='panel';card.style.marginBottom='12px';const date=new Date(b.start_at).toLocaleString('he-IL',{timeZone:'Asia/Jerusalem',weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});const status=b.status==='approved'?'התור אושר ♡':b.status==='cancelled'?'התור בוטל':'ממתין לאישור';const h=document.createElement('h3');h.textContent=status;const p=document.createElement('p');p.textContent=b.service+' · '+date;card.append(h,p);out.append(card)})});
 function GenUIcopyFallback(value){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(value).then(()=>toast('הקוד הועתק ♡')).catch(()=>toast('סמני והעתיקי את הקוד ידנית.'))}else{toast('סמני והעתיקי את הקוד ידנית.')}}document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();toast('תודה! זו הדגמה בלבד — כדי לקבל הודעות בפועל צריך לחבר שירות שליחת הודעות.')});
 async function checkAdminSession(){const {data:{session}}=await supabaseClient.auth.getSession();document.getElementById('adminLogin').style.display=session?'none':'block';document.getElementById('adminBookings').style.display=session?'block':'none';if(session)loadAdminBookings()}document.getElementById('adminLoginBtn').addEventListener('click',async()=>{const {error}=await supabaseClient.auth.signInWithPassword({email:document.getElementById('adminEmail').value,password:document.getElementById('adminPassword').value});if(error){toast('פרטי הכניסה אינם נכונים או שלא ניתן להתחבר.');return}checkAdminSession()});document.getElementById('adminLogout').addEventListener('click',async()=>{await supabaseClient.auth.signOut();checkAdminSession()});async function loadAdminBookings(){const root=document.getElementById('adminList');root.textContent='טוענת בקשות...';const {data,error}=await supabaseClient.from('bookings').select('id,customer_name,customer_phone,service,start_at,status,extra_note').order('start_at',{ascending:true});if(error){root.textContent='לא ניתן לטעון תורים.';return}if(!data.length){root.textContent='אין עדיין בקשות או תורים.';return}root.innerHTML='';data.forEach(b=>{const card=document.createElement('article');card.className='panel';card.style.margin='14px 0';const title=document.createElement('h3');title.textContent=(b.status==='pending'?'ממתינה לאישור':b.status==='approved'?'תור מאושר':'בוטל')+' · '+new Date(b.start_at).toLocaleString('he-IL',{timeZone:'Asia/Jerusalem',dateStyle:'full',timeStyle:'short'});const info=document.createElement('p');info.textContent=b.customer_name+' · '+b.customer_phone+' · '+b.service+(b.extra_note?' · הערה: '+b.extra_note:'');card.append(title,info);if(b.status==='pending'){const approve=document.createElement('button');approve.className='btn';approve.textContent='אישור תור';approve.onclick=()=>changeBooking(b.id,'approved');const reject=document.createElement('button');reject.className='btn';reject.style.marginInlineStart='8px';reject.textContent='דחיית בקשה';reject.onclick=()=>changeBooking(b.id,'cancelled');card.append(approve,reject)}else if(b.status==='approved'){const cancel=document.createElement('button');cancel.className='btn';cancel.textContent='ביטול תור';cancel.onclick=()=>changeBooking(b.id,'cancelled');card.append(cancel)}root.append(card)})}async function changeBooking(id,status){const {error}=await supabaseClient.from('bookings').update({status}).eq('id',id);if(error){toast('לא ניתן לעדכן את התור.');return}toast(status==='approved'?'התור אושר ♡':'הבקשה בוטלה');loadAdminBookings()}document.getElementById('year').textContent=new Date().getFullYear();
+
+/* Gallery filters and accessible lightbox; original customer work photos are preserved */
+(function initPinkGlamGallery(){
+ const root=document.querySelector('#gallery .gallery-grid');if(!root)return;
+ const figures=[...root.querySelectorAll('figure')];if(!figures.length)return;
+ const groups=[
+  {label:'הכל',test:()=>true},
+  {label:'ורוד',test:t=>/ורוד|לילך|ניוד ורוד|בייבי/i.test(t)},
+  {label:'ניוד וטבעי',test:t=>/ניוד|חלבי|פרנץ/i.test(t)},
+  {label:'צבעוני',test:t=>/סגול|כחול|נועז/i.test(t)}
+ ];
+ const filters=document.createElement('div');filters.className='gallery-filters';filters.setAttribute('aria-label','סינון עבודות לפי סגנון');
+ groups.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.className='gallery-filter'+(!i?' active':'');b.textContent=g.label;b.setAttribute('aria-pressed',String(!i));b.addEventListener('click',()=>{filters.querySelectorAll('button').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');figures.forEach(f=>{const t=f.querySelector('figcaption')?.textContent||'';f.hidden=!g.test(t)})});filters.append(b)});
+ root.parentElement.insertBefore(filters,root);
+ const overlay=document.createElement('div');overlay.className='gallery-lightbox';overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','תצוגת תמונה מוגדלת');
+ overlay.innerHTML='<figure><button class="close-lightbox" type="button" aria-label="סגירה">×</button><button class="prev-lightbox" type="button" aria-label="תמונה קודמת">‹</button><img alt=""><figcaption></figcaption><button class="next-lightbox" type="button" aria-label="תמונה הבאה">›</button></figure>';
+ document.body.append(overlay);let current=0,visible=figures;
+ const image=overlay.querySelector('img'),caption=overlay.querySelector('figcaption');
+ function show(index){visible=figures.filter(f=>!f.hidden);if(!visible.length)return;current=(index+visible.length)%visible.length;const f=visible[current],img=f.querySelector('img');image.src=img.src;image.alt=img.alt||'';caption.textContent=f.querySelector('figcaption')?.textContent||img.alt;overlay.classList.add('open');document.body.style.overflow='hidden';overlay.querySelector('.close-lightbox').focus()}
+ function close(){overlay.classList.remove('open');document.body.style.overflow=''}
+ figures.forEach(f=>{f.setAttribute('tabindex','0');f.setAttribute('role','button');f.setAttribute('aria-label','הגדלת תמונה: '+(f.querySelector('figcaption')?.textContent||''));f.addEventListener('click',()=>show(visible.indexOf(f)));f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(visible.indexOf(f))}})});
+ overlay.querySelector('.close-lightbox').addEventListener('click',close);
+ overlay.querySelector('.prev-lightbox').addEventListener('click',()=>show(current-1));
+ overlay.querySelector('.next-lightbox').addEventListener('click',()=>show(current+1));
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ document.addEventListener('keydown',e=>{if(!overlay.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(current+1);if(e.key==='ArrowRight')show(current-1)});
+})();
+
 </script></body></html>
