@@ -414,7 +414,33 @@ async function checkAdminSession(){const {data:{session}}=await supabaseClient.a
   root.append(card)
  })
 }
-async function changeBooking(id,status){const {error}=await supabaseClient.from('bookings').update({status}).eq('id',id);if(error){toast('לא ניתן לעדכן את התור.');return}toast(status==='approved'?'התור אושר ♡':'הבקשה בוטלה');loadAdminBookings()}document.getElementById('year').textContent=new Date().getFullYear();
+async function changeBooking(id,status){const {error}=await supabaseClient.from('bookings').update({status}).eq('id',id);if(error){toast('לא ניתן לעדכן את התור.');return}toast(status==='approved'?'התור אושר ♡':'הבקשה בוטלה');loadAdminBookings()}async function loadPublicReviews(){
+ const root=document.getElementById('publicReviews');if(!root)return;root.textContent='טוענות המלצות...';
+ const {data,error}=await supabaseClient.from('customer_reviews').select('customer_name,rating,review_text,created_at').eq('status','approved').order('created_at',{ascending:false}).limit(60);
+ if(error){root.textContent='כרגע לא ניתן לטעון המלצות. נסי שוב בעוד רגע.';document.getElementById('reviewsCount').textContent='';return}
+ const rows=data||[],avg=rows.length?rows.reduce((sum,r)=>sum+r.rating,0)/rows.length:0;
+ document.getElementById('reviewsAverage').textContent=rows.length?avg.toFixed(1):'♡';document.getElementById('reviewsCount').textContent=rows.length+' המלצות של לקוחות';
+ if(!rows.length){root.innerHTML='<div class="panel"><h3>ההמלצה הראשונה יכולה להיות שלך ♡</h3><p class="muted">עוד אין המלצות שפורסמו. אם כבר ביקרת אצלנו, נשמח לשמוע איך היה!</p></div>';return}
+ root.innerHTML='';rows.forEach(r=>{const card=document.createElement('article');card.className='review-card';const stars=document.createElement('div');stars.className='review-stars';stars.textContent='★'.repeat(r.rating)+'☆'.repeat(5-r.rating);const quote=document.createElement('p');quote.textContent='“'+r.review_text+'”';const name=document.createElement('strong');name.textContent=r.customer_name;const date=document.createElement('div');date.className='review-date';date.textContent=new Date(r.created_at).toLocaleDateString('he-IL');card.append(stars,quote,name,date);root.append(card)})
+}
+document.getElementById('reviewForm').addEventListener('submit',async e=>{
+ e.preventDefault();const btn=document.getElementById('reviewSubmit');btn.disabled=true;btn.textContent='שולחת...';
+ const customer_name=document.getElementById('reviewName').value.trim(),review_text=document.getElementById('reviewText').value.trim(),rating=Number(document.querySelector('input[name="reviewRating"]:checked')?.value||5);
+ const {error}=await supabaseClient.from('customer_reviews').insert({customer_name,review_text,rating,status:'pending'});
+ btn.disabled=false;btn.textContent='שליחת המלצה ♡';if(error){toast('לא הצלחנו לשלוח את ההמלצה כרגע. נסי שוב מאוחר יותר.');return}
+ e.currentTarget.reset();document.querySelector('input[name="reviewRating"][value="5"]').checked=true;toast('תודה רבה! ההמלצה נשלחה ותפורסם לאחר אישור ♡');
+});
+async function loadAdminReviews(){
+ const root=document.getElementById('adminReviewList');if(!root)return;root.textContent='טוענת המלצות...';
+ const {data,error}=await supabaseClient.from('customer_reviews').select('id,customer_name,rating,review_text,status,created_at').order('created_at',{ascending:false});
+ if(error){root.textContent='לא ניתן לטעון המלצות. בדקי שהטבלה customer_reviews חשופה ל־Data API.';return}
+ const rows=data||[];if(!rows.length){root.textContent='עדיין לא נשלחו המלצות.';return}root.innerHTML='';
+ rows.forEach(r=>{const card=document.createElement('article');card.className='admin-review-card';const title=document.createElement('strong');title.textContent=r.customer_name+' · '+'★'.repeat(r.rating);const status=document.createElement('span');status.className='review-status';status.textContent=r.status==='approved'?'פורסמה':r.status==='pending'?'ממתינה לאישור':'נדחתה';const body=document.createElement('p');body.textContent=r.review_text;const date=document.createElement('small');date.className='muted';date.textContent=new Date(r.created_at).toLocaleString('he-IL');card.append(title,status,body,date);
+ if(r.status!=='approved'){const approve=document.createElement('button');approve.className='btn';approve.textContent='אישור ופרסום';approve.onclick=()=>setReviewStatus(r.id,'approved');card.append(approve)}
+ if(r.status!=='rejected'){const reject=document.createElement('button');reject.className='btn secondary-admin';reject.textContent='דחייה';reject.onclick=()=>setReviewStatus(r.id,'rejected');card.append(reject)}root.append(card)})
+}
+async function setReviewStatus(id,status){const {error}=await supabaseClient.from('customer_reviews').update({status}).eq('id',id);if(error){toast('לא ניתן לעדכן את ההמלצה.');return}toast(status==='approved'?'ההמלצה פורסמה באתר ♡':'ההמלצה נדחתה');loadAdminReviews()}
+document.getElementById('year').textContent=new Date().getFullYear();
 
 /* Gallery filters and accessible lightbox; original customer work photos are preserved */
 (function initPinkGlamGallery(){
